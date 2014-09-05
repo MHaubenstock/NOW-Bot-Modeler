@@ -33,20 +33,13 @@ public class ModelAnimator : MonoBehaviour
 	void Update ()
 	{
 		//If an animation is playing, turn off the built-in animator
+		/*
 		if(numOfAnimationsPlaying > 0)
 			builtinAnimator.enabled = false;
 		else
 			//builtinAnimator.enabled = true;
 			builtinAnimator.enabled = false;
-
-		if(Input.GetKeyDown(KeyCode.Alpha1))
-			greetCustomer();
-
-		if(Input.GetKeyDown(KeyCode.Alpha2))
-			greetCustomer2();
-
-		if(Input.GetKeyDown(KeyCode.Alpha3))
-			greetCustomer3();
+		*/
 	}
 
 	void OnGUI()
@@ -60,50 +53,6 @@ public class ModelAnimator : MonoBehaviour
 				StartCoroutine(animateModel(a, val => animationIsPlaying = val));
 			}
 		}
-	}
-
-	//Tailored animation and audio managing methods
-	void greetCustomer()
-	{
-		Debug.Log("JJJJJ");
-		gatherTransforms();
-
-		//Start Greeting.AIFF
-		audioSource.clip = audioClips[0];
-		audioSource.Play();
-
-		//Start the animation
-		StartCoroutine(animateModel(7, val => animationIsPlaying = val));
-		//Start speaking animation
-		StartCoroutine(animateModel(8, val => animationIsPlaying = val));
-	}
-
-	void greetCustomer2()
-	{
-		gatherTransforms();
-
-		//Start Greeting2.AIFF
-		audioSource.clip = audioClips[1];
-		audioSource.Play();
-
-		//Start the animation
-		StartCoroutine(animateModel(12, val => animationIsPlaying = val));
-		//Start speaking animation
-		StartCoroutine(animateModel(13, val => animationIsPlaying = val));
-	}
-
-	void greetCustomer3()
-	{
-		gatherTransforms();
-
-		//Start Greeting3.AIFF
-		audioSource.clip = audioClips[2];
-		audioSource.Play();
-
-		//Start the animation
-		StartCoroutine(animateModel(12, val => animationIsPlaying = val)); //uses the animation for greeting 2 for now
-		//Start speaking animation
-		StartCoroutine(animateModel(14, val => animationIsPlaying = val));
 	}
 
 	void gatherTransforms()
@@ -222,7 +171,7 @@ public class ModelAnimator : MonoBehaviour
 		}
 
 		//return to position and rotation of model before starting the animation
-		if(numOfAnimationsPlaying == 1)
+		if(numOfAnimationsPlaying == 1 && anim.returnToStartingPosition)
 		{
 			Transform[] allTransforms = model.GetComponentsInChildren<Transform>();
 			List<Vector3> pos = new List<Vector3>();
@@ -397,7 +346,7 @@ public class ModelAnimator : MonoBehaviour
 		return equalizedAnimation;
 	}
 
-	public ModelAnimation stringAnimationsForNewAnimation(ModelAnimation[] modelAnimations, float[] pauses, bool skipOriginFrame, bool skipBackToOriginFrame)
+	public ModelAnimation stringAnimationsForNewAnimation(ModelAnimation[] modelAnimations, float[] pauses, bool skipOriginFrame, bool skipTheBackToOriginFrame)
 	{
 		ModelAnimation strungAnimation = new ModelAnimation();
 		List<Transform> allTransforms = new List<Transform>();
@@ -427,7 +376,7 @@ public class ModelAnimator : MonoBehaviour
 			List<Transform> thisAnimationTransforms = modelAnimations[a].modelTransforms.ToList();
 
 			//for each frame...
-			for(int f = (a > 0 && skipOriginFrame ? 1 : 0); f < modelAnimations[a].frames.Length + (skipBackToOriginFrame ? -1 : 0); ++f)
+			for(int f = (a > 0 && skipOriginFrame ? 1 : 0); f < modelAnimations[a].frames.Length + (skipTheBackToOriginFrame ? -1 : 0); ++f)
 			{
 				newFrame = new AnimationFrame(allTransforms.Count, "Frame " + allFrames.Count);
 				newFrame.playbackSpeed = modelAnimations[a].frames[f].playbackSpeed == 0 ? 0 : modelAnimations[a].frames[f].playbackSpeed;
@@ -625,6 +574,7 @@ public class ModelAnimation
 	public AnimationFrame [] frames;
 	public float playbackSpeed = 1;
 	public int priority = 0;
+	public bool returnToStartingPosition = true;
 
 	public ModelAnimation(){}
 

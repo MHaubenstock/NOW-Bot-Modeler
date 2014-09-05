@@ -5,8 +5,11 @@ class PoseCreator extends EditorWindow
 	var modelAnimator : ModelAnimator;
 	var workingAnimation : ModelAnimationRaw;
 	var animationName : String = "";
+	var includeOriginFrame : boolean = false;
+	var includeUnusedTransforms : boolean = false;
+	var animAndFrameToJumpTo : Vector2;
 
-	// Add menu named "My Window" to the Window menu
+	// Add menu named "Pose Creator" to the Window menu
 	@MenuItem ("Window/Pose Creator")
 	static function Init ()
 	{
@@ -52,6 +55,13 @@ class PoseCreator extends EditorWindow
 				Debug.Log(workingAnimation.frames.length);
 			}
 
+			addSpace(1);
+
+			includeOriginFrame = EditorGUILayout.Toggle("Include Origin Frame", includeOriginFrame);
+			includeUnusedTransforms = EditorGUILayout.Toggle("Include Unused Transforms", includeUnusedTransforms);
+
+			addSpace(1);
+
 			if(GUILayout.Button("Finsh & Process"))
 			{
 				processFinishedAnimation();
@@ -66,32 +76,47 @@ class PoseCreator extends EditorWindow
 
 		addSpace(3);
 
+		animAndFrameToJumpTo = EditorGUILayout.Vector2Field("Animation # and Frame #", animAndFrameToJumpTo);
+		if(GUILayout.Button("Jump to Frame State"))
+		{
+			var theFrame : AnimationFrame = modelAnimator.animations[animAndFrameToJumpTo.x].frames[animAndFrameToJumpTo.y];
+
+			for(var t : int = 0; t < modelAnimator.animations[animAndFrameToJumpTo.x].modelTransforms.length; ++t)
+			{
+				modelAnimator.animations[animAndFrameToJumpTo.x].modelTransforms[t].localPosition = theFrame.positionStates[t];
+				modelAnimator.animations[animAndFrameToJumpTo.x].modelTransforms[t].localRotation = theFrame.rotationStates[t];
+			}
+		}
+
+		addSpace(2);
+
 		//Reset
 		if(GUILayout.Button("Reset"))
 			reset();
 
-
+		/*
 		if(GUILayout.Button("Smooth Recent Animation"))
 		{
 			//modelAnimator.animations.Add(modelAnimator.equalizeAnimation(modelAnimator.animations[6], 1));
-			modelAnimator.animations.Add(modelAnimator.setAnimationPlaybackAsCloseAsPossible(modelAnimator.animations[4], 4));
-			//modelAnimator.animations.RemoveAt(14);
+			//modelAnimator.animations.Add(modelAnimator.setAnimationPlaybackAsCloseAsPossible(modelAnimator.animations[4], 4));
+			modelAnimator.animations.RemoveAt(2);
 		}
 
 		if(GUILayout.Button("Merge Animations"))
 		{
-			var modTest : ModelAnimation[] = [modelAnimator.animations[12], modelAnimator.animations[4]];
+			var modTest : ModelAnimation[] = [modelAnimator.animations[0], modelAnimator.animations[2]];
 			modelAnimator.animations.Add(modelAnimator.mergeAnimations(modTest));
 		}
 
 		if(GUILayout.Button("String Together Animations"))
 		{
 			//var animations : ModelAnimation[] = [modelAnimator.animations[0], modelAnimator.animations[0], modelAnimator.animations[5], modelAnimator.animations[0], modelAnimator.animations[5]];
-			var animations : ModelAnimation[] = [modelAnimator.animations[14], modelAnimator.animations[15]];
-			var pauses : float[] = [0.05];
+			var animations : ModelAnimation[] = [modelAnimator.animations[0]];
+			var pauses : float[] = [];
 
-			modelAnimator.animations.Add(modelAnimator.stringAnimationsForNewAnimation(animations, pauses, false, false));
+			modelAnimator.animations.Add(modelAnimator.stringAnimationsForNewAnimation(animations, pauses, true, false));
 		}
+		*/
 
 		if(GUILayout.Button("Save All Animations"))
 		{
@@ -119,9 +144,6 @@ class PoseCreator extends EditorWindow
 
 	function processFinishedAnimation()
 	{
-		//work in here now
-		//can gather animation frames so minimize lists to only transforms that changed
-
 		//Placeholders
 		var transformArr : Array = new Array();
 		var positionArr : Array = new Array();
@@ -130,7 +152,8 @@ class PoseCreator extends EditorWindow
 
 		var tempAnimation : ModelAnimation = new ModelAnimation();
 		tempAnimation.name = animationName;
-		tempAnimation.frames = new AnimationFrame[workingAnimation.frames.length];
+		Debug.Log(workingAnimation.frames.length - (includeOriginFrame ? 0 : 1));
+		tempAnimation.frames = new AnimationFrame[workingAnimation.frames.length - (includeOriginFrame ? 0 : 1)];
 
 		Debug.Log("Start Processing");
 		//keep list of bools for tranforms that change throughout then use it at the end
@@ -152,23 +175,25 @@ class PoseCreator extends EditorWindow
 		}
 
 		//for each frame in the working animation
-		for(var a : int = 1; a < workingAnimation.frames.length; ++a)
+		for(var a : int = 1 - (includeOriginFrame ? 0 : 1); a < workingAnimation.frames.length - (includeOriginFrame ? 0 : 1); ++a)
 		{
+			usedFrameNum = a  + (includeOriginFrame ? 0 : 1);
+
 			Debug.Log("Process frame: " + a);
-			//compare this frame to frame a-1, keep only transforms and vector 3's that change
-			for(var f : int = 0; f < workingAnimation.frames[a].theTransforms.length; ++f)
+			//Build the frame from the working animation
+			for(var f : int = 0; f < workingAnimation.frames[usedFrameNum].theTransforms.length; ++f)
 			{
-				if(usedTransforms[f] || !usedATransform)
+				if(includeUnusedTransforms || usedTransforms[f] || !usedATransform)
 				{
 					//add to array of used transforms for this frame
-					transformArr.Add(workingAnimation.frames[a].theTransforms[f]);
-					positionArr.Add(workingAnimation.frames[a].positionStates[f]);
-					rotationArr.Add(workingAnimation.frames[a].rotationStates[f]);
+					transformArr.Add(workingAnimation.frames[usedFrameNum].theTransforms[f]);
+					positionArr.Add(workingAnimation.frames[usedFrameNum].positionStates[f]);
+					rotationArr.Add(workingAnimation.frames[usedFrameNum].rotationStates[f]);
 				}
 			}
 
 			//Finish processing frame
-			tempAnimation.frames[a] = new AnimationFrame(transformArr.length, "Frame " + a);
+			tempAnimation.frames[a] = new AnimationFrame(transformArr.length, "Frame " + usedFrameNum);
 			tempAnimation.modelTransforms = transformArr.ToBuiltin(Transform);
 			tempAnimation.frames[a].positionStates = positionArr.ToBuiltin(Vector3);
 			tempAnimation.frames[a].rotationStates = rotationArr.ToBuiltin(Quaternion);
@@ -178,21 +203,24 @@ class PoseCreator extends EditorWindow
 			rotationArr.Clear();
 		}
 
-		//process first frame as a starting state
-		for(var x : int = 0; x < usedTransforms.length; ++x)
+		if(includeOriginFrame)
 		{
-			if(usedTransforms[x] || !usedATransform)
+			//process first frame as a starting state
+			for(var x : int = 0; x < usedTransforms.length; ++x)
 			{
-				transformArr.Add(workingAnimation.frames[0].theTransforms[x]);
-				positionArr.Add(workingAnimation.frames[0].positionStates[x]);
-				rotationArr.Add(workingAnimation.frames[0].rotationStates[x]);
+				if(usedTransforms[x] || !usedATransform)
+				{
+					transformArr.Add(workingAnimation.frames[0].theTransforms[x]);
+					positionArr.Add(workingAnimation.frames[0].positionStates[x]);
+					rotationArr.Add(workingAnimation.frames[0].rotationStates[x]);
+				}
 			}
-		}
 
-		tempAnimation.frames[0] = new AnimationFrame(transformArr.length, "Origin Frame");
-		tempAnimation.modelTransforms = transformArr.ToBuiltin(Transform);
-		tempAnimation.frames[0].positionStates = positionArr.ToBuiltin(Vector3);
-		tempAnimation.frames[0].rotationStates = rotationArr.ToBuiltin(Quaternion);
+			tempAnimation.frames[0] = new AnimationFrame(transformArr.length, "Origin Frame");
+			tempAnimation.modelTransforms = transformArr.ToBuiltin(Transform);
+			tempAnimation.frames[0].positionStates = positionArr.ToBuiltin(Vector3);
+			tempAnimation.frames[0].rotationStates = rotationArr.ToBuiltin(Quaternion);
+		}
 
 		modelAnimator.animations.Add(tempAnimation);
 		Debug.Log("Done Processing");

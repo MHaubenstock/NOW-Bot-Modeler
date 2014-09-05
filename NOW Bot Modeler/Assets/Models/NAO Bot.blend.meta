@@ -36,6 +36,24 @@ ModelImporter:
     100060: Shoulder_Right
     100062: Torso
     100064: Torso_001
+    100066: Foot_Left_001
+    100068: Foot_Right_001
+    100070: Bottom_Finger_Back_Left
+    100072: Bottom_Finger_Back_Right
+    100074: Bottom_Finger_Front_Right
+    100076: Bottom_Finger_Middle_Left
+    100078: Bottom_Finger_Middle_Right
+    100080: Neck
+    100082: Top_Finger_Back_Left
+    100084: Top_Finger_Back_Right
+    100086: Top_Finger_Front_Left
+    100088: Top_Finger_Front_Left_001
+    100090: Top_Finger_Front_Right
+    100092: Top_Finger_Middle_Left
+    100094: Top_Finger_Middle_Right
+    100096: Bottom_Finger_Front_Left
+    100098: Toes_Left
+    100100: Toes_Right
     400000: 12211_Robot_l2_v4
     400002: 12211_Robot_l2_v4_MeshPart0
     400004: 12211_Robot_l2_v4_MeshPart1
@@ -69,6 +87,24 @@ ModelImporter:
     400060: Shoulder_Right
     400062: Torso
     400064: Torso_001
+    400066: Foot_Left_001
+    400068: Foot_Right_001
+    400070: Bottom_Finger_Back_Left
+    400072: Bottom_Finger_Back_Right
+    400074: Bottom_Finger_Front_Right
+    400076: Bottom_Finger_Middle_Left
+    400078: Bottom_Finger_Middle_Right
+    400080: Neck
+    400082: Top_Finger_Back_Left
+    400084: Top_Finger_Back_Right
+    400086: Top_Finger_Front_Left
+    400088: Top_Finger_Front_Left_001
+    400090: Top_Finger_Front_Right
+    400092: Top_Finger_Middle_Left
+    400094: Top_Finger_Middle_Right
+    400096: Bottom_Finger_Front_Left
+    400098: Toes_Left
+    400100: Toes_Right
     2300000: 12211_Robot_l2_v4_MeshPart0
     2300002: 12211_Robot_l2_v4_MeshPart1
     2300004: 12211_Robot_l2_v4_MeshPart2
@@ -92,7 +128,7 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
