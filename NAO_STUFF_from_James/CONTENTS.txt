@@ -1,0 +1,14 @@
+MSDNEngineering... Visual Studio 2012 solution
+	unfinised kinect code ( C# and Matlab ) which allows users
+	to control the nao with the kinect
+
+Nao 2	Visual Studio 2012 solution
+	my own code for a windows form application that allows users
+	to script the robot with voice and movement. This project is
+	"hello world"
+
+	also contains misc projects, such as "Expo_1" which is a simple
+	interface for movement. I'm not sure what background_test is
+
+Python walker is the unfinished Python GUI application which was
+to replace Nao 2 ( the C# windows form application )

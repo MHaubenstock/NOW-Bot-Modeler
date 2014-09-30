@@ -1,0 +1,10 @@
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Release\hello_world.exe.config
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Release\hello_world.exe
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Release\hello_world.pdb
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Release\naoqi-dotnet4.dll
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Release\naoqi-dotnet4.xml
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Release\hello_world.Form1.resources
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Release\hello_world.Properties.Resources.resources
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Release\hello_world.csproj.GenerateResource.Cache
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Release\hello_world.exe
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Release\hello_world.pdb

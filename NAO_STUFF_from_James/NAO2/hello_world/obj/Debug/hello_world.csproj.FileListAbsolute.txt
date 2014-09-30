@@ -1,0 +1,15 @@
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\bin\Debug\hello_world.exe.config
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\bin\Debug\hello_world.exe
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\bin\Debug\hello_world.pdb
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\bin\Debug\naoqi-dotnet4.dll
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\bin\Debug\naoqi-dotnet4.xml
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.csprojResolveAssemblyReference.cache
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.Properties.Resources.resources
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.csproj.GenerateResource.Cache
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.exe
+c:\users\james_000\documents\visual studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.pdb
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.Form1.resources
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Debug\hello_world.exe.manifest
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\bin\Debug\hello_world.application
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.exe.manifest
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\hello_world\obj\Debug\hello_world.application

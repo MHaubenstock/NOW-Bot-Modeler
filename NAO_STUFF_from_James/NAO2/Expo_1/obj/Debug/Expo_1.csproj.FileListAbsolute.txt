@@ -1,0 +1,13 @@
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\bin\Debug\Expo_1.exe.config
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\bin\Debug\Expo_1.exe
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\bin\Debug\Expo_1.pdb
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\bin\Debug\naoqi-dotnet4.dll
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\bin\Debug\naoqi-dotnet4.xml
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.csprojResolveAssemblyReference.cache
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.Form1.resources
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.Properties.Resources.resources
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.csproj.GenerateResource.Cache
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.exe
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.pdb
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Interop.MLApp.dll
+C:\Users\james_000\documents\visual studio 2012\Projects\NAO2\Expo_1\obj\Debug\Expo_1.csproj.ResolveComReference.cache

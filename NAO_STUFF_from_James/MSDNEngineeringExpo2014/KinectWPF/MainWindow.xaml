@@ -1,0 +1,32 @@
+﻿<Window x:Class="KinectWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="MenuStripRow" Height="24" />
+            <RowDefinition Name="ContentRow" Height="*" />
+            <RowDefinition Name="StatusBarRow" Height="24" />
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <MenuItem VerticalAlignment="Stretch" Width="48" Header="Sensor" />
+        </Menu>
+
+        <TabControl Name="tabControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TabItem Header="Kinect Camera">
+                <Image Name="KinectColor" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="Kinect Depth">
+                <Image Name="KinectDepth" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </TabItem>
+            <TabItem Header="Kinect Skeleton">
+                <Image Name="KinectSkeleton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </TabItem>
+        </TabControl>
+
+        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StatusBarItem Name="statusBarText" Content="StatusBarItem" VerticalAlignment="Stretch"/>
+        </StatusBar>
+    </Grid>
+</Window>

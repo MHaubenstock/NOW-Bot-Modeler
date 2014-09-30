@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <timeline_start_frame>1</timeline_start_frame>
+  <timeline_end_frame>121</timeline_end_frame>
+  <frames_per_second>2</frames_per_second>
+  <keys />
+  <poses />
+  <volume>1</volume>
+  <script />
+</instance>

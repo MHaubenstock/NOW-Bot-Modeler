@@ -1,0 +1,36 @@
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\MainWindow.baml
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\Prompt.baml
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\SensorConnect.baml
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\MainWindow.g.cs
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\Prompt.g.cs
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\SensorConnect.g.cs
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\App.g.cs
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF_MarkupCompile.cache
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.g.resources
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.Properties.Resources.resources
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.csproj.GenerateResource.Cache
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\bin\Debug\KinectWPF.exe.config
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\bin\Debug\KinectWPF.exe
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\bin\Debug\KinectWPF.pdb
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.exe
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.pdb
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.csprojResolveAssemblyReference.cache
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\bin\Debug\KinectWPF.exe.config
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.exe
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.pdb
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.csprojResolveAssemblyReference.cache
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\MainWindow.baml
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\Prompt.baml
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\SensorConnect.baml
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\MainWindow.g.cs
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\Prompt.g.cs
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\SensorConnect.g.cs
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\App.g.cs
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF_MarkupCompile.cache
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.g.resources
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.Properties.Resources.resources
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.csproj.GenerateResource.Cache
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\bin\Debug\KinectWPF.exe
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\bin\Debug\KinectWPF.pdb
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\Interop.MLApp.dll
+C:\Users\james_000\Documents\nao\MSDNEngineeringExpo2014\KinectWPF\obj\Debug\KinectWPF.csproj.ResolveComReference.cache

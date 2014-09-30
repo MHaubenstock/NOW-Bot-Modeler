@@ -1,0 +1,9 @@
+﻿<Window x:Class="KinectWPF.SensorConnect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SensorConnect" Height="340" Width="316">
+    <Grid>
+        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Images/loading.gif" />
+        <Label Content="Connecting to Kinect Sensor..." HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,5" />
+    </Grid>
+</Window>

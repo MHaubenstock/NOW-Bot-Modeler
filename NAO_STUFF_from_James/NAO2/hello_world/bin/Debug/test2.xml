@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <timeline_start_frame>0</timeline_start_frame>
+  <timeline_end_frame>120</timeline_end_frame>
+  <keys>
+    <string>1</string>
+  </keys>
+  <poses>
+    <pose>
+      <description>description: 1</description>
+      <hold_time>1</hold_time>
+      <angles>
+        <float>10</float>
+      </angles>
+    </pose>
+  </poses>
+</instance>

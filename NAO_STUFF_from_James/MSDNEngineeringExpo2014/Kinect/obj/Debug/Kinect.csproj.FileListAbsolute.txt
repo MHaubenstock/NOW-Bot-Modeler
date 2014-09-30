@@ -1,0 +1,11 @@
+c:\users\dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\bin\Debug\Kinect.exe.config
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect.csprojResolveAssemblyReference.cache
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\KinectColor.baml
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\KinectColor.g.cs
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect_Content.g.cs
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect_MarkupCompile.cache
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect.g.resources
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect.Main.resources
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect.Properties.Resources.resources
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect.SensorConnect.resources
+C:\Users\Dylan\documents\visual studio 2012\Projects\MSDNEngineeringExpo2014\Kinect\obj\Debug\Kinect.csproj.GenerateResource.Cache

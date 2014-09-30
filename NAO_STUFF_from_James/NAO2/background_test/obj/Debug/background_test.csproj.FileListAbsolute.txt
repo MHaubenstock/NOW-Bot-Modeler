@@ -1,0 +1,9 @@
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\bin\Debug\background_test.exe.config
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\obj\Debug\background_test.Form1.resources
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\obj\Debug\background_test.Properties.Resources.resources
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\obj\Debug\background_test.csproj.GenerateResource.Cache
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\bin\Debug\background_test.exe
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\bin\Debug\background_test.pdb
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\obj\Debug\background_test.exe
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\obj\Debug\background_test.pdb
+C:\Users\james_000\Documents\Visual Studio 2012\Projects\NAO2\background_test\obj\Debug\background_test.csprojResolveAssemblyReference.cache

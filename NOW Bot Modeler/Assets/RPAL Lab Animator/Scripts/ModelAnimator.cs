@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 
 //TODO: Not merging properly with the idle animation. Look into this
-//TODO: She moves around, anchor her to a single spot
 
 public class ModelAnimator : MonoBehaviour
 {
