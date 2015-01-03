@@ -43,6 +43,7 @@ public class ModelAnimator : MonoBehaviour
 
 	void OnGUI()
 	{
+		/*
 		for(int a = 0; a < animations.Count; ++a)
 		{
 			if(GUI.Button(new Rect(0, 31 * a, animations[a].name.Length * 8, 30), animations[a].name))
@@ -52,9 +53,10 @@ public class ModelAnimator : MonoBehaviour
 				StartCoroutine(animateModel(a, val => animationIsPlaying = val));
 			}
 		}
+		*/
 	}
 
-	void gatherTransforms()
+	public void gatherTransforms()
 	{
 		if(numOfAnimationsPlaying == 0)
 		{
@@ -99,10 +101,16 @@ public class ModelAnimator : MonoBehaviour
 	//runs as a coroutine and animates the model
 	IEnumerator animateModel(int index, Action<bool> playing)
 	{
+		animateModel(animations[index], val => animationIsPlaying = val);
+		yield return true;
+	}
+
+	public IEnumerator animateModel(ModelAnimation animation, Action<bool> playing)
+	{
 		playing(true);
 		++numOfAnimationsPlaying;
 
-		ModelAnimation anim = animations[index];
+		ModelAnimation anim = animation;
 		float frameProgress = 0.0F;
 
 		if(numOfAnimationsPlaying == 1)
@@ -510,6 +518,7 @@ public class ModelAnimator : MonoBehaviour
 	public bool saveAnimations(string serializedAnimations)
 	{
 		using(StreamWriter outfile = new StreamWriter("Assets/Resources/NAOAnimations.txt"))
+		//using(StreamWriter outfile = new StreamWriter("Assets/Resources/NAOStartingPositions.txt"))
         {
            	outfile.Write(serializedAnimations);
         }
@@ -517,9 +526,14 @@ public class ModelAnimator : MonoBehaviour
         return true;
 	}
 
-	public bool readAnimationsFromFile()
+	public List<ModelAnimation> readAnimationsFromFile()
 	{
-		StreamReader inFile = new StreamReader("Assets/Resources/NAOAnimations.txt");
+		return readAnimationsFromFile("Assets/Resources/NAOAnimations.txt");
+	}
+
+	public List<ModelAnimation> readAnimationsFromFile(String fileName)
+	{
+		StreamReader inFile = new StreamReader(fileName);
 
 		//read number of animations
 		int numOfAnimations = int.Parse(inFile.ReadLine());
@@ -559,9 +573,10 @@ public class ModelAnimator : MonoBehaviour
         }
 
         //Finished creating animations from file, now assign it to our list of animations
-        this.animations = animations;
+        //this.animations = animations;
+        return animations;
 
-		return true;
+		//return true;
 	}
 }
 

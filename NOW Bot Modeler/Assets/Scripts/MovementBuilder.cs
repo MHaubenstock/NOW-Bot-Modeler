@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MovementBuilder : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MovementBuilder : MonoBehaviour
 	public float angularDrag = 5.0f;
 	public float dragDistance = 0.2f;
 	public bool attachToCenterOfMass = false;
+	public bool allowDragging = false;
 
 	private SpringJoint springJoint;
 	private Camera mainCamera;
@@ -40,9 +42,27 @@ public class MovementBuilder : MonoBehaviour
 	private float y = 0.0f;
 	//
 
+	//For GUI
+	private ModelAnimator modelAnimator;
+	public List<ModelAnimation> startingPositions;
+	private Rect setupWindowRect = new Rect(Screen.width * 0.2F, Screen.height * 0.25F, Screen.width * 0.6F, Screen.height * 0.5F);
+	private string animationName = "";
+	private bool setupAnimation = true;
+	private bool choseName = false;
+	private bool animationIsPlaying = false;
+	//
+
 	// Use this for initialization
 	void Start ()
 	{
+		//Load starting positions
+		modelAnimator = GetComponent<ModelAnimator>();;
+		//Load starting positions
+		startingPositions = modelAnimator.readAnimationsFromFile("Assets/Resources/NAOStartingPositions.txt");
+		//Set returnToStartingPosition to false for each one
+		foreach(ModelAnimation anim in startingPositions)
+			anim.returnToStartingPosition = false;
+
 		//Set up mouse orbit stuff
 		var angles = transform.eulerAngles;
 	    x = angles.y;
@@ -65,33 +85,82 @@ public class MovementBuilder : MonoBehaviour
 		maxFootDistanceFromHip = (leftThigh.lossyScale.x * .8F) + (leftCalf.lossyScale.x * .8F);
 	}
 	
+	void OnGUI()
+	{
+		//Show restart button
+		if(GUI.Button(new Rect(Screen.width * 0.7F, 0, Screen.width * 0.3F, Screen.width * 0.1F), "Restart"))
+		{
+			setupAnimation = true;
+			choseName = false;
+			animationIsPlaying = false;
+		}
+
+		//Show setup window before you begin making the animation
+		if(setupAnimation)
+			setupWindowRect = GUI.Window(0, setupWindowRect, SetupWindow, "Setup");
+	}
+
+	void SetupWindow(int windowID)
+	{
+		//Prompt animation name
+		if(!choseName)
+		{
+			GUI.Label(new Rect(setupWindowRect.width * 0.025F, setupWindowRect.height * 0.2F, setupWindowRect.width * 0.95F, 25), "Enter a name for the movement:");
+			animationName = GUI.TextField(new Rect(setupWindowRect.width * 0.025F, setupWindowRect.height * 0.4F, setupWindowRect.width * 0.95F, 20), animationName, 25);
+
+			if(GUI.Button(new Rect(setupWindowRect.width * 0.15F, setupWindowRect.height * 0.7F, setupWindowRect.width * 0.7F, 40), "Next") && animationName != "")
+				choseName = true;
+		}
+		//prompt for starting position
+		else
+		{
+			GUI.Label(new Rect(setupWindowRect.width * 0.025F, setupWindowRect.height * 0.2F, setupWindowRect.width * 0.95F, 25), "Choose a starting position");
+
+			for(int x = 0; x < startingPositions.Count; ++x)
+			{
+				if(GUI.Button(new Rect(setupWindowRect.width * 0.15F, setupWindowRect.height * 0.2F + (43 * (x + 1)), setupWindowRect.width * 0.7F, 40), startingPositions[x].name))
+				{
+					setupAnimation = false;
+					allowDragging = true;
+
+					//Animate to starting position
+					modelAnimator.gatherTransforms();
+					StartCoroutine(modelAnimator.animateModel(startingPositions[x], val => animationIsPlaying = val));
+				}
+			}
+		}
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
-		//Dragging stuff
-		// Make sure the user pressed the mouse down
-		if (Input.GetMouseButtonDown (0))
+		if(allowDragging)
 		{
-			// We need to actually hit an object
-			RaycastHit hit;
-			int layerMask = 1 << 12;	//DraggableLayer
-
-			if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100, layerMask))
+			//Dragging stuff
+			// Make sure the user pressed the mouse down
+			if (Input.GetMouseButtonDown (0))
 			{
-				if (hit.transform.tag == "DraggableArm")
-				{
-					if(hit.transform.localPosition.y < 0)	//If it is the left arm
-						StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 8));
-					else
-						StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 9));
-				}
+				// We need to actually hit an object
+				RaycastHit hit;
+				int layerMask = 1 << 12;	//DraggableLayer
 
-				if (hit.transform.tag == "DraggableLeg")
+				if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100, layerMask))
 				{
-					if(hit.transform.localPosition.y < 0)	//If it is the left leg
-						StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 10));
-					else
-						StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 11));
+					if (hit.transform.tag == "DraggableArm")
+					{
+						if(hit.transform.localPosition.y < 0)	//If it is the left arm
+							StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 8));
+						else
+							StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 9));
+					}
+
+					if (hit.transform.tag == "DraggableLeg")
+					{
+						if(hit.transform.localPosition.y < 0)	//If it is the left leg
+							StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 10));
+						else
+							StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 11));
+					}
 				}
 			}
 		}

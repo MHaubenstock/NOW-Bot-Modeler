@@ -126,7 +126,7 @@ class PoseCreator extends EditorWindow
 		}
 
 		if(GUILayout.Button("Load All Animations"))
-			modelAnimator.readAnimationsFromFile();
+			modelAnimator.animations = modelAnimator.readAnimationsFromFile();
 
 	}
 

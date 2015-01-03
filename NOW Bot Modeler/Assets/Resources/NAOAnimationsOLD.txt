@@ -1,0 +1,247 @@
+5
+Make Fist
+4
+6
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Back_Left/Bottom_Finger_Back_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Front_Left/Bottom_Finger_Front_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Middle_Left/Bottom_Finger_Middle_Left
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Back_Right/Bottom_Finger_Back_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Front_Right/Bottom_Finger_Front_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Middle_Right/Bottom_Finger_Middle_Right
+1
+beginframe
+Frame: Frame 1
+6
+-0.1753903 1.134537E-05 2.846122E-06
+-0.1638831 1.038238E-05 3.680587E-06
+-0.1787897 -2.738088E-07 5.854294E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+-0.170383 8.903444E-06 -3.166497E-06
+-0.1789914 -9.749085E-06 -4.307367E-08
+6
+-0.1919401 0.0805269 -0.6629588 0.7191384
+0.1868535 -0.1212886 -0.6244892 0.7485908
+-0.2796233 -0.7072669 0.03925185 0.6481078
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0.7102999 0.1959249 0.6172088 -0.2759361
+0.1058058 -0.7107474 -0.01023254 0.6953694
+0
+endframe
+
+Fighting Stance
+4
+17
+Armature_001
+Armature_001/Leg_Left/Lower_Leg_Left
+Armature_001/Leg_Left/Lower_Leg_Left/Foot_Left
+Armature_001/Leg_Right/Lower_Leg_Right
+Armature_001/Leg_Right/Lower_Leg_Right/Foot_Right
+Armature_001/Torso
+Armature_001/Torso/Neck
+Armature_001/Torso/Shoulder_Left/Arm_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left
+Armature_001/Torso/Shoulder_Right/Arm_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Back_Left/Bottom_Finger_Back_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Front_Left/Bottom_Finger_Front_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Middle_Left/Bottom_Finger_Middle_Left
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Back_Right/Bottom_Finger_Back_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Front_Right/Bottom_Finger_Front_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Middle_Right/Bottom_Finger_Middle_Right
+1
+beginframe
+Frame: Frame 0
+17
+0.01055588 1.232911 0.01422289
+-0.4639905 -7.376075E-07 3.427267E-07
+-1.135627 -6.79493E-06 -3.606081E-06
+-0.4639924 -3.501773E-07 1.53482E-06
+-1.135636 1.788139E-07 4.537404E-06
+0 0 0
+-0.9999866 7.601643E-08 -6.073719E-10
+-0.7191079 3.95067E-06 -1.442648E-06
+-0.7470318 -2.974272E-05 -2.217293E-05
+-0.7190817 1.51787E-05 -5.110643E-05
+-0.7470697 1.013279E-06 -7.688999E-06
+-0.1753903 1.134537E-05 2.846122E-06
+-0.1638831 1.038238E-05 3.680587E-06
+-0.1787897 -2.738088E-07 5.854294E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+-0.170383 8.903444E-06 -3.166497E-06
+-0.1789914 -9.749085E-06 -4.307367E-08
+17
+-0.7071068 0 0 0.7071067
+-0.8055151 -0.4476989 -0.05683053 0.3840332
+0.0935696 0.2400786 -0.04450068 0.9652082
+0.7191778 -0.1880132 0.3643186 0.5609869
+-0.09615958 -0.1927088 0.06506003 0.9743633
+0.2911538 0.644383 -0.2911538 0.644383
+0.3688302 0.002489118 0.01422837 0.9293845
+0.3405085 -0.3360221 0.3481866 0.8061696
+-0.4330495 -0.4902891 0.5937691 -0.4685329
+-0.06134746 -0.5970603 -0.4393934 0.668348
+0.505991 -0.8095956 -0.1933061 0.226188
+-0.1919401 0.0805269 -0.6629588 0.7191384
+0.1868535 -0.1212886 -0.6244892 0.7485908
+-0.2796233 -0.7072669 0.03925185 0.6481078
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0.7102999 0.1959249 0.6172088 -0.2759361
+0.1058058 -0.7107474 -0.01023254 0.6953694
+0
+endframe
+
+Front Kick
+10
+4
+Armature_001/Leg_Left/Lower_Leg_Left
+Armature_001/Leg_Left/Lower_Leg_Left/Foot_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Back_Left/Bottom_Finger_Back_Left
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Back_Right/Bottom_Finger_Back_Right
+3
+beginframe
+Frame: Frame 1
+4
+-0.4639906 -3.024936E-06 1.221895E-06
+-1.135632 3.680587E-06 -1.081824E-05
+-0.1753903 1.134537E-05 2.846122E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+4
+-0.6255525 -0.6589993 0.4170094 -0.02252224
+0.0442272 0.8724411 0.0123469 0.4865575
+-0.1919401 0.0805269 -0.6629588 0.7191384
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0
+endframe
+beginframe
+Frame: Frame 2
+4
+-0.4639904 -1.639128E-06 6.109476E-07
+-1.135627 -6.79493E-06 -3.606081E-06
+-0.1753903 1.134537E-05 2.846122E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+4
+-0.6781081 -0.6449644 0.3492464 0.0470889
+0.0935696 0.2400786 -0.04450068 0.9652082
+-0.1919401 0.08052691 -0.6629589 0.7191384
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0
+endframe
+beginframe
+Frame: Frame 3
+4
+-0.4639905 -7.376075E-07 3.427267E-07
+-1.135627 -6.79493E-06 -3.606081E-06
+-0.1753903 1.134537E-05 2.846122E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+4
+-0.805515 -0.4476988 -0.05683052 0.3840331
+0.0935696 0.2400786 -0.04450068 0.9652082
+-0.1919401 0.08052691 -0.6629589 0.7191384
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0
+endframe
+
+Left Punch
+1
+5
+Armature_001/Leg_Left/Lower_Leg_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Back_Left/Bottom_Finger_Back_Left
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Back_Right/Bottom_Finger_Back_Right
+2
+beginframe
+Frame: Frame 1
+5
+-0.4639905 -7.376075E-07 3.427267E-07
+-0.7190949 8.668751E-06 -3.741348E-06
+-0.74692 -6.935932E-05 -3.039464E-05
+-0.1753903 1.134537E-05 2.846122E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+5
+-0.8055151 -0.4476989 -0.05683053 0.3840332
+0.155298 0.0303041 0.3652249 0.917374
+-0.817101 0.05340798 0.06271178 0.5705794
+-0.1919401 0.0805269 -0.6629588 0.7191384
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0
+endframe
+beginframe
+Frame: Frame 2
+5
+-0.4639905 -7.376075E-07 3.427267E-07
+-0.7191079 3.95067E-06 -1.442648E-06
+-0.7470318 -2.974272E-05 -2.217293E-05
+-0.1753903 1.134537E-05 2.846122E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+5
+-0.805515 -0.4476988 -0.05683052 0.3840331
+0.3405085 -0.3360221 0.3481866 0.8061695
+-0.4330495 -0.4902891 0.5937691 -0.4685329
+-0.1919401 0.08052691 -0.6629589 0.7191384
+-0.4798969 -0.5132018 0.4292617 0.5675009
+4
+endframe
+
+Fighting Stance 2
+1
+17
+Armature_001
+Armature_001/Leg_Left/Lower_Leg_Left
+Armature_001/Leg_Left/Lower_Leg_Left/Foot_Left
+Armature_001/Leg_Right/Lower_Leg_Right
+Armature_001/Leg_Right/Lower_Leg_Right/Foot_Right
+Armature_001/Torso
+Armature_001/Torso/Neck
+Armature_001/Torso/Shoulder_Left/Arm_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Back_Left/Bottom_Finger_Back_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Front_Left/Bottom_Finger_Front_Left
+Armature_001/Torso/Shoulder_Left/Arm_Left/Forearm_Left/Top_Finger_Middle_Left/Bottom_Finger_Middle_Left
+Armature_001/Torso/Shoulder_Right/Arm_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Back_Right/Bottom_Finger_Back_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Front_Right/Bottom_Finger_Front_Right
+Armature_001/Torso/Shoulder_Right/Arm_Right/Forearn_Right/Top_Finger_Middle_Right/Bottom_Finger_Middle_Right
+1
+beginframe
+Frame: Frame 1
+17
+0.01055588 1.232911 0.01422289
+-0.4639905 -1.236796E-06 5.066395E-07
+-1.135627 -6.79493E-06 -3.606081E-06
+-0.4639924 -3.501773E-07 1.53482E-06
+-1.135636 1.788139E-07 4.537404E-06
+0 0 0
+-0.9999866 7.601643E-08 -6.073719E-10
+-0.7191079 3.95067E-06 -1.442648E-06
+-0.7470318 -2.974272E-05 -2.217293E-05
+-0.1753903 1.134537E-05 2.846122E-06
+-0.1638831 1.038238E-05 3.680587E-06
+-0.1787897 -2.738088E-07 5.854294E-06
+-0.7190817 1.51787E-05 -5.110643E-05
+-0.7470697 1.013279E-06 -7.688999E-06
+-0.177314 -2.061948E-06 -6.02752E-06
+-0.170383 8.903444E-06 -3.166497E-06
+-0.1789914 -9.749085E-06 -4.307367E-08
+17
+-0.7071068 0 0 0.7071067
+-0.811938 -0.4266531 -0.03360269 0.3969817
+0.0935696 0.2400786 -0.04450068 0.9652082
+0.7191778 -0.1880132 0.3643186 0.5609869
+-0.09615958 -0.1927088 0.06506003 0.9743633
+0.2911538 0.644383 -0.2911538 0.644383
+0.3688302 0.002489118 0.01422837 0.9293846
+0.3405085 -0.3360221 0.3481866 0.8061695
+-0.4330495 -0.4902891 0.5937691 -0.4685329
+-0.1919401 0.08052691 -0.6629589 0.7191384
+0.1868535 -0.1212886 -0.6244892 0.7485908
+-0.2796233 -0.7072669 0.03925185 0.6481078
+-0.06134745 -0.5970603 -0.4393933 0.668348
+0.505991 -0.8095956 -0.1933061 0.226188
+-0.4798969 -0.5132018 0.4292617 0.5675009
+0.7102999 0.1959249 0.6172088 -0.2759361
+0.1058058 -0.7107474 -0.01023254 0.6953694
+0
+endframe
+
