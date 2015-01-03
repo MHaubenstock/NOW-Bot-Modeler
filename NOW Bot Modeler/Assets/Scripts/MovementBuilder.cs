@@ -23,6 +23,7 @@ public class MovementBuilder : MonoBehaviour
 	public Transform leftCalf;	//For measuring, so no need for right calf
 	public Transform leftThigh;
 	public Transform rightThigh;
+	public Transform movementPlane;
 
 	private float maxElbowDistanceFromShoulder;
 	private float maxHandDistanceFromShoulder;
@@ -44,7 +45,8 @@ public class MovementBuilder : MonoBehaviour
 
 	//For GUI
 	private ModelAnimator modelAnimator;
-	public List<ModelAnimation> startingPositions;
+	private ModelAnimationRaw workingAnimation;
+	private List<ModelAnimation> startingPositions;
 	private Rect setupWindowRect = new Rect(Screen.width * 0.2F, Screen.height * 0.25F, Screen.width * 0.6F, Screen.height * 0.5F);
 	private string animationName = "";
 	private bool setupAnimation = true;
@@ -126,6 +128,9 @@ public class MovementBuilder : MonoBehaviour
 					//Animate to starting position
 					modelAnimator.gatherTransforms();
 					StartCoroutine(modelAnimator.animateModel(startingPositions[x], val => animationIsPlaying = val));
+
+					//Begin creating an animation
+					workingAnimation = new ModelAnimationRaw(animationName, modelAnimator.model.GetComponentsInChildren<Transform>());
 				}
 			}
 		}
@@ -146,20 +151,17 @@ public class MovementBuilder : MonoBehaviour
 
 				if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100, layerMask))
 				{
+					movementPlane.position = hit.transform.position;
+					movementPlane.rotation = Quaternion.LookRotation(new Vector3(movementPlane.forward.x, 0, movementPlane.forward.z), Vector3.up);
+
 					if (hit.transform.tag == "DraggableArm")
 					{
-						if(hit.transform.localPosition.y < 0)	//If it is the left arm
-							StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 8));
-						else
-							StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 9));
+						StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 8));
 					}
 
 					if (hit.transform.tag == "DraggableLeg")
 					{
-						if(hit.transform.localPosition.y < 0)	//If it is the left leg
-							StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 10));
-						else
-							StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 11));
+						StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 8));
 					}
 				}
 			}
@@ -185,7 +187,7 @@ public class MovementBuilder : MonoBehaviour
 
 	IEnumerator DragArm (float distance, Transform go, int layerMask)
 	{
-		Transform shoulder = (layerMask == 1 << 8 ? leftShoulder : rightShoulder);
+		Transform shoulder = (go.name == "Forearm_Left" ? leftShoulder : rightShoulder);
 		Transform hand = go;
 
 		while (Input.GetMouseButton (0))
@@ -230,7 +232,7 @@ public class MovementBuilder : MonoBehaviour
 
 	IEnumerator DragLeg (float distance, Transform go, int layerMask)
 	{
-		Transform thigh = (layerMask == 1 << 10 ? leftThigh : rightThigh);
+		Transform thigh = (go.name == "Foot_Left" ? leftThigh : rightThigh);
 		Transform calf = go;
 
 		while (Input.GetMouseButton (0))

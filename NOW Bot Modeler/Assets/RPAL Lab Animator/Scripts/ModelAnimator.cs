@@ -910,3 +910,53 @@ public class AnimationFrame
 		return frame;
 	}
 }
+
+public class ModelAnimationRaw
+{
+	public string animationName;
+	public Transform[] modelTransforms;
+	public List<AnimationFrameRaw> frames = new List<AnimationFrameRaw>();
+	public int frameNumber = 1;
+
+	ModelAnimationRaw(){}
+
+	public ModelAnimationRaw(string name, Transform[] points)
+	{
+		animationName = name;
+		modelTransforms = points;
+		getState();
+	}
+
+	public void getState()
+	{
+		AnimationFrameRaw tempFrame = new AnimationFrameRaw(modelTransforms.Length, animationName + "_Frame_" + frameNumber.ToString());
+
+		//Iterate through each transform in the model and gather its position and rotation
+		for(int t = 0; t < modelTransforms.Length; ++t)
+		{
+			tempFrame.theTransforms[t] = modelTransforms[t];
+			tempFrame.positionStates[t] = modelTransforms[t].localPosition;
+			tempFrame.rotationStates[t] = modelTransforms[t].localRotation;
+		}
+
+		//Add frame to array of frames
+		frames.Add(tempFrame);
+		++frameNumber;
+	}
+}
+
+public class AnimationFrameRaw
+{
+	public string frameName;
+	public Transform[] theTransforms;
+	public Vector3[] positionStates;
+	public Quaternion[] rotationStates;
+
+	public AnimationFrameRaw(int numOfTransforms, string name)
+	{
+		frameName = name;
+		theTransforms = new Transform[numOfTransforms];
+		positionStates = new Vector3[numOfTransforms];
+		rotationStates = new Quaternion[numOfTransforms];
+	}
+}
