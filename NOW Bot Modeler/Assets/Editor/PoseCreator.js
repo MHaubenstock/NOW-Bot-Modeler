@@ -68,7 +68,7 @@ class PoseCreator extends EditorWindow
 			}
 
 			//Information
-			for(var fr : AnimationFrameRaw in workingAnimation.frames.ToBuiltin(AnimationFrameRaw) as AnimationFrameRaw[])
+			for(var fr : AnimationFrameRaw in workingAnimation.frames.ToArray() as AnimationFrameRaw[])
 			{
 				EditorGUILayout.LabelField(fr.frameName);
 			}
@@ -122,7 +122,7 @@ class PoseCreator extends EditorWindow
 		{
 			//get serialized animations and save them to a file
 			var serializedAnimations : String = modelAnimator.serializeAnimations();
-			modelAnimator.saveAnimations(serializedAnimations);			
+			modelAnimator.saveAnimations(serializedAnimations);
 		}
 
 		if(GUILayout.Button("Load All Animations"))

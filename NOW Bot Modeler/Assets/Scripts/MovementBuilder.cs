@@ -48,16 +48,17 @@ public class MovementBuilder : MonoBehaviour
 	private ModelAnimationRaw workingAnimation;
 	private List<ModelAnimation> startingPositions;
 	private Rect setupWindowRect = new Rect(Screen.width * 0.2F, Screen.height * 0.25F, Screen.width * 0.6F, Screen.height * 0.5F);
+	private Rect animateControlWindowRect = new Rect(0, 0, Screen.width * 0.6F, Screen.height * 0.15F);
 	private string animationName = "";
 	private bool setupAnimation = true;
 	private bool choseName = false;
 	private bool animationIsPlaying = false;
+	private int lastStartingPositionIndex = 0;
 	//
 
 	// Use this for initialization
 	void Start ()
 	{
-		//Load starting positions
 		modelAnimator = GetComponent<ModelAnimator>();;
 		//Load starting positions
 		startingPositions = modelAnimator.readAnimationsFromFile("Assets/Resources/NAOStartingPositions.txt");
@@ -65,8 +66,11 @@ public class MovementBuilder : MonoBehaviour
 		foreach(ModelAnimation anim in startingPositions)
 			anim.returnToStartingPosition = false;
 
+		//Load locally created moves
+		modelAnimator.animations = modelAnimator.readAnimationsFromFile();
+
 		//Set up mouse orbit stuff
-		var angles = transform.eulerAngles;
+		Vector3 angles = transform.eulerAngles;
 	    x = angles.y;
 	    y = angles.x;
 
@@ -90,16 +94,40 @@ public class MovementBuilder : MonoBehaviour
 	void OnGUI()
 	{
 		//Show restart button
-		if(GUI.Button(new Rect(Screen.width * 0.7F, 0, Screen.width * 0.3F, Screen.width * 0.1F), "Restart"))
+		if(GUI.Button(new Rect(Screen.width * 0.8F, 0, Screen.width * 0.2F, Screen.width * 0.08F), "Restart"))
 		{
-			setupAnimation = true;
-			choseName = false;
-			animationIsPlaying = false;
+			resetBuilder();
 		}
+
+		//Show save all button
+		if(GUI.Button(new Rect(Screen.width * 0.8F, Screen.width * 0.08F, Screen.width * 0.2F, Screen.width * 0.08F), "Save All"))
+		{
+			string serializedAnimations = modelAnimator.serializeAnimations();
+			modelAnimator.saveAnimations(serializedAnimations);
+		}
+
+		//Show undo button, moves NAO back to its last position based on mouse down and up
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+
+		//Show fine-tune button, switches to another camera containing the gui to tweak the moves
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
+		//************************************************************************************
 
 		//Show setup window before you begin making the animation
 		if(setupAnimation)
 			setupWindowRect = GUI.Window(0, setupWindowRect, SetupWindow, "Setup");
+		else
+		//Show the animation building controls
+			animateControlWindowRect = GUI.Window(1, animateControlWindowRect, animationControls, "Controls");
 	}
 
 	void SetupWindow(int windowID)
@@ -124,6 +152,7 @@ public class MovementBuilder : MonoBehaviour
 				{
 					setupAnimation = false;
 					allowDragging = true;
+					lastStartingPositionIndex = x;
 
 					//Animate to starting position
 					modelAnimator.gatherTransforms();
@@ -134,6 +163,40 @@ public class MovementBuilder : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	void animationControls(int windowID)
+	{
+		int numOfFixtures = 3;
+		float marginSize = animateControlWindowRect.width * 0.05F;
+		float fixtureWidth = (animateControlWindowRect.width - marginSize * 6) / numOfFixtures;
+
+		if(GUI.Button(new Rect(marginSize, animateControlWindowRect.height * 0.45F, fixtureWidth, animateControlWindowRect.height * 0.5F), "Save State"))
+		{
+			workingAnimation.getState();
+		}
+
+		//Finish and proceess the animation, then move back to original stance and ask if they want to make another
+		if(GUI.Button(new Rect(marginSize * 3 + fixtureWidth, animateControlWindowRect.height * 0.45F, fixtureWidth, animateControlWindowRect.height * 0.5F), "Finish"))
+		{
+			//proccess and store animation
+			modelAnimator.animations.Add(workingAnimation.processFinishedAnimation());
+
+			//Move back to original stance
+			StartCoroutine(modelAnimator.animateModel(startingPositions[lastStartingPositionIndex], val => animationIsPlaying = val));
+
+			//Reset the process
+			resetBuilder();
+		}
+
+		GUI.Label(new Rect(marginSize * 5 + fixtureWidth * 2, animateControlWindowRect.height * 0.45F, fixtureWidth, animateControlWindowRect.height * 0.5F), "Num of Frames: " + workingAnimation.frameNumber);
+	}
+
+	void resetBuilder()
+	{
+		setupAnimation = true;
+		choseName = false;
+		animationIsPlaying = false;
 	}
 
 	// Update is called once per frame

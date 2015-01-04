@@ -43,17 +43,17 @@ public class ModelAnimator : MonoBehaviour
 
 	void OnGUI()
 	{
-		/*
+		
 		for(int a = 0; a < animations.Count; ++a)
 		{
 			if(GUI.Button(new Rect(0, 31 * a, animations[a].name.Length * 8, 30), animations[a].name))
 			{
 				gatherTransforms();
 
-				StartCoroutine(animateModel(a, val => animationIsPlaying = val));
+				StartCoroutine(animateModel(animations[a], val => animationIsPlaying = val));
 			}
 		}
-		*/
+		
 	}
 
 	public void gatherTransforms()
@@ -102,6 +102,7 @@ public class ModelAnimator : MonoBehaviour
 	IEnumerator animateModel(int index, Action<bool> playing)
 	{
 		animateModel(animations[index], val => animationIsPlaying = val);
+
 		yield return true;
 	}
 
@@ -109,7 +110,7 @@ public class ModelAnimator : MonoBehaviour
 	{
 		playing(true);
 		++numOfAnimationsPlaying;
-
+		
 		ModelAnimation anim = animation;
 		float frameProgress = 0.0F;
 
@@ -917,6 +918,8 @@ public class ModelAnimationRaw
 	public Transform[] modelTransforms;
 	public List<AnimationFrameRaw> frames = new List<AnimationFrameRaw>();
 	public int frameNumber = 1;
+	public bool includeOriginFrame = false;
+	public bool includeUnusedTransforms = false;
 
 	ModelAnimationRaw(){}
 
@@ -942,6 +945,93 @@ public class ModelAnimationRaw
 		//Add frame to array of frames
 		frames.Add(tempFrame);
 		++frameNumber;
+	}
+
+	public ModelAnimation processFinishedAnimation()
+	{
+		//Placeholders
+		List<Transform> transformArr = new List<Transform>();
+		List<Vector3> positionArr = new List<Vector3>();
+		List<Quaternion> rotationArr = new List<Quaternion>();
+		bool usedATransform = false;
+
+		ModelAnimation tempAnimation = new ModelAnimation();
+		tempAnimation.name = animationName;
+		Debug.Log(frames.Count - (includeOriginFrame ? 0 : 1));
+		tempAnimation.frames = new AnimationFrame[frames.Count - (includeOriginFrame ? 0 : 1)];
+
+		Debug.Log("Start Processing");
+		//keep list of bools for tranforms that change throughout then use it at the end
+		//to create a starting state as the first frame
+		bool[] usedTransforms = new bool[modelTransforms.Length];
+
+		//Get used transforms
+		for(int ua = 1; ua < frames.Count; ++ua)
+		{
+			//compare this frame to frame a-1, keep only transforms and vector 3's that change
+			for(int uf = 0; uf < frames[ua].theTransforms.Length; ++uf)
+			{
+				if((frames[ua].positionStates[uf] != frames[ua - 1].positionStates[uf]) || (frames[ua].rotationStates[uf] != frames[ua - 1].rotationStates[uf]))
+				{
+					usedTransforms[uf] = true;
+					usedATransform = true;
+				}
+			}
+		}
+
+		int usedFrameNum;
+
+		//for each frame in the working animation
+		for(int a = 1 - (includeOriginFrame ? 0 : 1); a < frames.Count - (includeOriginFrame ? 0 : 1); ++a)
+		{
+			usedFrameNum = a + (includeOriginFrame ? 0 : 1);
+
+			Debug.Log("Process frame: " + a);
+			//Build the frame from the working animation
+			for(int f = 0; f < frames[usedFrameNum].theTransforms.Length; ++f)
+			{
+				if(includeUnusedTransforms || usedTransforms[f] || !usedATransform)
+				{
+					//add to array of used transforms for this frame
+					transformArr.Add(frames[usedFrameNum].theTransforms[f]);
+					positionArr.Add(frames[usedFrameNum].positionStates[f]);
+					rotationArr.Add(frames[usedFrameNum].rotationStates[f]);
+				}
+			}
+
+			//Finish processing frame
+			tempAnimation.frames[a] = new AnimationFrame(transformArr.Count, "Frame " + usedFrameNum);
+			tempAnimation.modelTransforms = transformArr.ToArray() as Transform[];
+			tempAnimation.frames[a].positionStates = positionArr.ToArray() as Vector3[];
+			tempAnimation.frames[a].rotationStates = rotationArr.ToArray() as Quaternion[];
+
+			transformArr.Clear();
+			positionArr.Clear();
+			rotationArr.Clear();
+		}
+
+		if(includeOriginFrame)
+		{
+			//process first frame as a starting state
+			for(int x = 0; x < usedTransforms.Length; ++x)
+			{
+				if(usedTransforms[x] || !usedATransform)
+				{
+					transformArr.Add(frames[0].theTransforms[x]);
+					positionArr.Add(frames[0].positionStates[x]);
+					rotationArr.Add(frames[0].rotationStates[x]);
+				}
+			}
+
+			tempAnimation.frames[0] = new AnimationFrame(transformArr.Count, "Origin Frame");
+			tempAnimation.modelTransforms = transformArr.ToArray() as Transform[];
+			tempAnimation.frames[0].positionStates = positionArr.ToArray() as Vector3[];
+			tempAnimation.frames[0].rotationStates = rotationArr.ToArray() as Quaternion[];
+		}
+
+		//modelAnimator.animations.Add(tempAnimation);
+		return tempAnimation;
+		Debug.Log("Done Processing");
 	}
 }
 
