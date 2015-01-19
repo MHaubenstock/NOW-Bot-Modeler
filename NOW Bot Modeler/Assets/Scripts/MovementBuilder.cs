@@ -14,7 +14,7 @@ public class MovementBuilder : MonoBehaviour
 	public bool allowDragging = false;
 
 	private SpringJoint springJoint;
-	private Camera mainCamera;
+	public Camera mainCamera;
 
 		//It is assumed that the NAO bot is symmetrical
 	public Transform leftHand;	//For measuring, so no need for right hand
@@ -24,6 +24,9 @@ public class MovementBuilder : MonoBehaviour
 	public Transform leftThigh;
 	public Transform rightThigh;
 	public Transform movementPlane;
+	public Stack<AnimationFrameRaw> undoFrameStack = new Stack<AnimationFrameRaw>();
+	public Stack<AnimationFrameRaw> redoFrameStack = new Stack<AnimationFrameRaw>();
+
 
 	private float maxElbowDistanceFromShoulder;
 	private float maxHandDistanceFromShoulder;
@@ -39,7 +42,7 @@ public class MovementBuilder : MonoBehaviour
 	public float yMinLimit = -20f;
 	public float yMaxLimit = 80f;
 
-	private float x = 0.0f;
+	private float x = 180.0f;
 	private float y = 0.0f;
 	//
 
@@ -48,20 +51,25 @@ public class MovementBuilder : MonoBehaviour
 	private ModelAnimationRaw workingAnimation;
 	private List<ModelAnimation> startingPositions;
 	private Rect setupWindowRect = new Rect(Screen.width * 0.2F, Screen.height * 0.25F, Screen.width * 0.6F, Screen.height * 0.5F);
-	private Rect animateControlWindowRect = new Rect(0, 0, Screen.width * 0.6F, Screen.height * 0.15F);
+	private Rect animateControlWindowRect = new Rect(0, 0, 500, 200);
 	private string animationName = "";
 	private bool setupAnimation = true;
 	private bool choseName = false;
 	private bool animationIsPlaying = false;
 	private int lastStartingPositionIndex = 0;
+
+		//For debugging
+		private string debugString = "None";
 	//
 
 	// Use this for initialization
 	void Start ()
 	{
-		modelAnimator = GetComponent<ModelAnimator>();;
+		modelAnimator = GetComponent<ModelAnimator>();
+
 		//Load starting positions
-		startingPositions = modelAnimator.readAnimationsFromFile("Assets/Resources/NAOStartingPositions.txt");
+		//startingPositions = modelAnimator.readAnimationsFromFile("Assets/Resources/NAOStartingPositions.txt");
+		startingPositions = modelAnimator.readAnimationsFromFile(Application.dataPath + "/Resources/NAOStartingPositions.txt");
 		//Set returnToStartingPosition to false for each one
 		foreach(ModelAnimation anim in startingPositions)
 			anim.returnToStartingPosition = false;
@@ -83,36 +91,48 @@ public class MovementBuilder : MonoBehaviour
 			rigidbody.freezeRotation = true;
 
 		//Set up dragging stuff
-		mainCamera = Camera.mainCamera;
+		//mainCamera = Camera.mainCamera;
 
 		maxElbowDistanceFromShoulder = leftShoulder.lossyScale.x * .8F;
 		maxHandDistanceFromShoulder = (leftShoulder.lossyScale.x * .8F) + (leftHand.lossyScale.x * .8F);
-		maxKneeDistanceFromHip = leftThigh.lossyScale.x * .8F;
-		maxFootDistanceFromHip = (leftThigh.lossyScale.x * .8F) + (leftCalf.lossyScale.x * .8F);
+		maxKneeDistanceFromHip = leftThigh.lossyScale.x * 1.15F; //* .8F;
+		//maxFootDistanceFromHip = (leftThigh.lossyScale.x * .8F) + (leftCalf.lossyScale.x * .8F);
+		maxFootDistanceFromHip = (leftThigh.lossyScale.x * 1.15F) + (leftCalf.lossyScale.x * 1.15F);
 	}
 	
 	void OnGUI()
 	{
+		//Show buttons to play created animations
+		modelAnimator.AnimationSelectionGUI();
+
+		//For debugging on runtime
+		//GUI.Label(new Rect(100, 100, 1000, 30), debugString);
+		//
+
 		//Show restart button
-		if(GUI.Button(new Rect(Screen.width * 0.8F, 0, Screen.width * 0.2F, Screen.width * 0.08F), "Restart"))
+		if(GUI.Button(new Rect(Screen.width - 71, 0, 70, 35), "Restart"))
 		{
 			resetBuilder();
 		}
 
 		//Show save all button
-		if(GUI.Button(new Rect(Screen.width * 0.8F, Screen.width * 0.08F, Screen.width * 0.2F, Screen.width * 0.08F), "Save All"))
+		if(GUI.Button(new Rect(Screen.width - 71, 36, 70, 35), "Save All"))
 		{
 			string serializedAnimations = modelAnimator.serializeAnimations();
 			modelAnimator.saveAnimations(serializedAnimations);
 		}
 
 		//Show undo button, moves NAO back to its last position based on mouse down and up
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
+		if(GUI.Button(new Rect(Screen.width - 141, 0, 70, 35), "Undo"))
+		{
+			undoMovement();
+		}
+
+		//Show undo button, moves NAO back to its last position based on mouse down and up
+		if(GUI.Button(new Rect(Screen.width - 141, 36, 70, 35), "Redo"))
+		{
+			redoMovement();
+		}
 
 		//Show fine-tune button, switches to another camera containing the gui to tweak the moves
 		//************************************************************************************
@@ -173,7 +193,7 @@ public class MovementBuilder : MonoBehaviour
 
 		if(GUI.Button(new Rect(marginSize, animateControlWindowRect.height * 0.45F, fixtureWidth, animateControlWindowRect.height * 0.5F), "Save State"))
 		{
-			workingAnimation.getState();
+			workingAnimation.addState(workingAnimation.getState());
 		}
 
 		//Finish and proceess the animation, then move back to original stance and ask if they want to make another
@@ -182,21 +202,72 @@ public class MovementBuilder : MonoBehaviour
 			//proccess and store animation
 			modelAnimator.animations.Add(workingAnimation.processFinishedAnimation());
 
-			//Move back to original stance
-			StartCoroutine(modelAnimator.animateModel(startingPositions[lastStartingPositionIndex], val => animationIsPlaying = val));
-
 			//Reset the process
 			resetBuilder();
 		}
 
-		GUI.Label(new Rect(marginSize * 5 + fixtureWidth * 2, animateControlWindowRect.height * 0.45F, fixtureWidth, animateControlWindowRect.height * 0.5F), "Num of Frames: " + workingAnimation.frameNumber);
+		GUI.Label(new Rect(marginSize * 5 + fixtureWidth * 2, animateControlWindowRect.height * 0.45F, fixtureWidth, animateControlWindowRect.height * 0.5F), "Num of Frames: " + (workingAnimation.frameNumber - 2));
 	}
 
 	void resetBuilder()
 	{
+		//Move back to original stance
+		StartCoroutine(modelAnimator.animateModel(startingPositions[lastStartingPositionIndex], val => animationIsPlaying = val));
+
 		setupAnimation = true;
 		choseName = false;
 		animationIsPlaying = false;
+
+		resetUndoStack();
+		resetRedoStack();
+	}
+
+	void undoMovement()
+	{
+		if(undoFrameStack.Count == 0)
+			return;
+
+		//Set NAO positions and rotations to last position
+		AnimationFrameRaw lastState = undoFrameStack.Pop();
+
+		//Add to redo movement stack
+		redoFrameStack.Push(workingAnimation.getState());
+
+		//Iterate through each transform in the model and gather its position and rotation
+		for(int t = 0; t < lastState.theTransforms.Length; ++t)
+		{
+			lastState.theTransforms[t].localPosition = lastState.positionStates[t];
+			lastState.theTransforms[t].localRotation = lastState.rotationStates[t];
+		}
+	}
+
+	void redoMovement()
+	{
+		if(redoFrameStack.Count == 0)
+			return;
+
+		//Set NAO positions and rotations to last position
+		AnimationFrameRaw lastState = redoFrameStack.Pop();
+
+		//Add to redo movement stack
+		undoFrameStack.Push(workingAnimation.getState());
+
+		//Iterate through each transform in the model and gather its position and rotation
+		for(int t = 0; t < lastState.theTransforms.Length; ++t)
+		{
+			lastState.theTransforms[t].localPosition = lastState.positionStates[t];
+			lastState.theTransforms[t].localRotation = lastState.rotationStates[t];
+		}
+	}
+
+	void resetUndoStack()
+	{
+		undoFrameStack = new Stack<AnimationFrameRaw>();
+	}
+
+	void resetRedoStack()
+	{
+		redoFrameStack = new Stack<AnimationFrameRaw>();
 	}
 
 	// Update is called once per frame
@@ -211,20 +282,39 @@ public class MovementBuilder : MonoBehaviour
 				// We need to actually hit an object
 				RaycastHit hit;
 				int layerMask = 1 << 12;	//DraggableLayer
-
+				debugString = Camera.mainCamera.transform.name + "  ";
 				if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100, layerMask))
 				{
 					movementPlane.position = hit.transform.position;
 					movementPlane.rotation = Quaternion.LookRotation(new Vector3(movementPlane.forward.x, 0, movementPlane.forward.z), Vector3.up);
 
+					debugString += "\n" + hit.transform.tag;
+
 					if (hit.transform.tag == "DraggableArm")
 					{
+						//Save current state to stack so movement can be undone
+						undoFrameStack.Push(workingAnimation.getState());
+						resetRedoStack();
+
 						StartCoroutine (DragArm(hit.distance, hit.transform, 1 << 8));
 					}
 
-					if (hit.transform.tag == "DraggableLeg")
+					else if (hit.transform.tag == "DraggableLeg")
 					{
+						//Save current state to stack so movement can be undone
+						undoFrameStack.Push(workingAnimation.getState());
+						resetRedoStack();
+
 						StartCoroutine (DragLeg(hit.distance, hit.transform, 1 << 8));
+					}
+
+					else if(hit.transform.tag == "DraggableTorso")
+					{
+						//Save current state to stack so movement can be undone
+						undoFrameStack.Push(workingAnimation.getState());
+						resetRedoStack();
+
+						StartCoroutine (DragTorso(hit.distance, hit.transform, 1 << 8));	
 					}
 				}
 			}
@@ -250,7 +340,8 @@ public class MovementBuilder : MonoBehaviour
 
 	IEnumerator DragArm (float distance, Transform go, int layerMask)
 	{
-		Transform shoulder = (go.name == "Forearm_Left" ? leftShoulder : rightShoulder);
+		bool isLeftSide = go.name == "Forearm_Left";
+		Transform shoulder = (isLeftSide ? leftShoulder : rightShoulder);
 		Transform hand = go;
 
 		while (Input.GetMouseButton (0))
@@ -295,7 +386,8 @@ public class MovementBuilder : MonoBehaviour
 
 	IEnumerator DragLeg (float distance, Transform go, int layerMask)
 	{
-		Transform thigh = (go.name == "Foot_Left" ? leftThigh : rightThigh);
+		bool isLeftSide = go.name == "Foot_Left";
+		Transform thigh = (isLeftSide ? leftThigh : rightThigh);
 		Transform calf = go;
 
 		while (Input.GetMouseButton (0))
@@ -320,11 +412,11 @@ public class MovementBuilder : MonoBehaviour
 			//The leg segments are rotating incorrectly, come back to this later
 			Debug.Log(Vector3.Angle(calf.right, Vector3.up));
 			calf.Rotate(180, 0, 0);
-			calf.Rotate(180 + Vector3.Angle(calf.right, Vector3.down), 0, 0);
+			calf.Rotate((180 + Vector3.Angle(calf.right, Vector3.down)) * (isLeftSide ? 1 : -1), 0, 0);
 
 			//Debug.Log(Quaternion.LookRotation(thigh.position - calf.position, Vector3.right));
 			thigh.right = thigh.position - calf.position;
-			thigh.Rotate(180 - Vector3.Angle(thigh.right, Vector3.up), 0, 0);
+			thigh.Rotate((180 - Vector3.Angle(thigh.right, Vector3.up)) * (isLeftSide ? 1 : -1), 0, 0);
 			//thigh.rotation = Quaternion.LookRotation(thigh.position - calf.position, Vector3.up);
 
 			//thigh.up = Vector3.left;
@@ -348,6 +440,36 @@ public class MovementBuilder : MonoBehaviour
 		//else return the closest valid position to the proposed position
 		else
 			return thigh.position + (proposedPosition - thigh.position).normalized * maxFootDistanceFromHip;
+	}
+
+	IEnumerator DragTorso (float distance, Transform go, int layerMask)
+	{
+		Transform torso = go;
+
+		while (Input.GetMouseButton (0))
+		{
+			//Set distance based on distance to the plane for that limb
+			//Get distance to plane
+			RaycastHit hit;
+			Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(ray, out hit, 100, layerMask))
+			{
+				distance = hit.distance;
+			}
+
+			//Do IK Stuff
+			Vector3 targetDirection = torso.position - hit.point;
+			torso.right = targetDirection;
+
+			float angleToNAO = Vector3.Angle(ray.direction, Vector3.forward);
+			if(angleToNAO < 135 || angleToNAO > 180)
+			{
+				Debug.Log(angleToNAO);
+				torso.Rotate(Vector3.Angle(torso.right, Vector3.down) * (hit.point.z >= 0 ? 1 : -1), 0, 0);
+			}
+
+			yield return true;
+		}
 	}
 
 	static float ClampAngle (float angle, float min, float max)

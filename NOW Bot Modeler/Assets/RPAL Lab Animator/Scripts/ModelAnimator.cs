@@ -41,12 +41,12 @@ public class ModelAnimator : MonoBehaviour
 		*/
 	}
 
-	void OnGUI()
+	public void AnimationSelectionGUI()
 	{
 		
 		for(int a = 0; a < animations.Count; ++a)
 		{
-			if(GUI.Button(new Rect(0, 31 * a, animations[a].name.Length * 8, 30), animations[a].name))
+			if(GUI.Button(new Rect(0, 101 + (31 * a), animations[a].name.Length * 8, 30), animations[a].name))
 			{
 				gatherTransforms();
 
@@ -518,7 +518,8 @@ public class ModelAnimator : MonoBehaviour
 
 	public bool saveAnimations(string serializedAnimations)
 	{
-		using(StreamWriter outfile = new StreamWriter("Assets/Resources/NAOAnimations.txt"))
+		using(StreamWriter outfile = new StreamWriter(Application.dataPath + "/Resources/NAOAnimations.txt"))
+		//using(StreamWriter outfile = new StreamWriter("Assets/Resources/NAOAnimations.txt"))
 		//using(StreamWriter outfile = new StreamWriter("Assets/Resources/NAOStartingPositions.txt"))
         {
            	outfile.Write(serializedAnimations);
@@ -529,7 +530,8 @@ public class ModelAnimator : MonoBehaviour
 
 	public List<ModelAnimation> readAnimationsFromFile()
 	{
-		return readAnimationsFromFile("Assets/Resources/NAOAnimations.txt");
+		return readAnimationsFromFile(Application.dataPath + "/Resources/NAOAnimations.txt");
+		//return readAnimationsFromFile("Assets/Resources/NAOAnimations.txt");
 	}
 
 	public List<ModelAnimation> readAnimationsFromFile(String fileName)
@@ -927,10 +929,10 @@ public class ModelAnimationRaw
 	{
 		animationName = name;
 		modelTransforms = points;
-		getState();
+		addState(getState());
 	}
 
-	public void getState()
+	public AnimationFrameRaw getState()
 	{
 		AnimationFrameRaw tempFrame = new AnimationFrameRaw(modelTransforms.Length, animationName + "_Frame_" + frameNumber.ToString());
 
@@ -942,8 +944,13 @@ public class ModelAnimationRaw
 			tempFrame.rotationStates[t] = modelTransforms[t].localRotation;
 		}
 
+		return tempFrame;
+	}
+
+	public void addState(AnimationFrameRaw state)
+	{
 		//Add frame to array of frames
-		frames.Add(tempFrame);
+		frames.Add(state);
 		++frameNumber;
 	}
 

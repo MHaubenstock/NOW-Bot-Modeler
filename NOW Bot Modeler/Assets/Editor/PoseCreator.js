@@ -139,7 +139,7 @@ class PoseCreator extends EditorWindow
 	function getState()
 	{
 		if(workingAnimation)
-			workingAnimation.getState();
+			workingAnimation.addState(workingAnimation.getState());
 	}
 
 	function processFinishedAnimation()
