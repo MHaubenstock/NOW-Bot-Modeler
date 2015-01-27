@@ -47,16 +47,24 @@ public class MovementBuilder : MonoBehaviour
 	//
 
 	//For GUI
+	public Camera builderCamera;
+	public Camera fineTuneCamera;
+	private bool isBuilding = true;
 	private ModelAnimator modelAnimator;
 	private ModelAnimationRaw workingAnimation;
 	private List<ModelAnimation> startingPositions;
 	private Rect setupWindowRect = new Rect(Screen.width * 0.2F, Screen.height * 0.25F, Screen.width * 0.6F, Screen.height * 0.5F);
 	private Rect animateControlWindowRect = new Rect(0, 0, 500, 200);
+	private Rect fineTuneWindowRect = new Rect(0, 0, 500, 500);
 	private string animationName = "";
 	private bool setupAnimation = true;
 	private bool choseName = false;
 	private bool animationIsPlaying = false;
 	private int lastStartingPositionIndex = 0;
+	private int movementSelectionInt = 0;
+	private string[] movementNames;
+	private Vector2 scrollPosition = Vector2.zero;
+	private float sliderValue = 1;
 
 		//For debugging
 		private string debugString = "None";
@@ -102,12 +110,20 @@ public class MovementBuilder : MonoBehaviour
 	
 	void OnGUI()
 	{
-		//Show buttons to play created animations
-		modelAnimator.AnimationSelectionGUI();
-
 		//For debugging on runtime
 		//GUI.Label(new Rect(100, 100, 1000, 30), debugString);
 		//
+
+		if(isBuilding)
+			BuilderGUI();
+		else
+			FineTuneGUI();		
+	}
+
+	void BuilderGUI()
+	{
+		//Show buttons to play created animations
+		modelAnimator.AnimationSelectionGUI();
 
 		//Show restart button
 		if(GUI.Button(new Rect(Screen.width - 71, 0, 70, 35), "Restart"))
@@ -135,12 +151,23 @@ public class MovementBuilder : MonoBehaviour
 		}
 
 		//Show fine-tune button, switches to another camera containing the gui to tweak the moves
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
-		//************************************************************************************
+		if(GUI.Button(new Rect(Screen.width - 70, Screen.height - 35, 70, 35), "Fine-Tune"))
+		{
+			//populate with movement names
+			movementNames = new string[modelAnimator.animations.Count];
+
+			for(int m = 0; m < modelAnimator.animations.Count; ++m)
+			{
+				movementNames[m] += modelAnimator.animations[m].name;
+			}
+
+			//Turn off builder camer, turn on fine-tune camera
+			fineTuneCamera.enabled = true;
+			builderCamera.enabled = false;
+
+			isBuilding = false;
+		}
+
 
 		//Show setup window before you begin making the animation
 		if(setupAnimation)
@@ -148,6 +175,57 @@ public class MovementBuilder : MonoBehaviour
 		else
 		//Show the animation building controls
 			animateControlWindowRect = GUI.Window(1, animateControlWindowRect, animationControls, "Controls");
+	}
+
+	void FineTuneGUI()
+	{
+		//Show builder button, switches back to the move builder
+		if(GUI.Button(new Rect(Screen.width - 70, Screen.height - 35, 70, 35), "Build"))
+		{
+			//Turn off builder camer, turn on fine-tune camera
+			builderCamera.enabled = true;
+			fineTuneCamera.enabled = false;
+
+			isBuilding = true;
+			resetBuilder();
+		}
+
+		fineTuneWindowRect = GUI.Window(2, fineTuneWindowRect, fineTuneWindow, "Animation Settings");
+	}
+
+	void fineTuneWindow(int windowID)
+	{
+		//Display movements to choose
+		movementSelectionInt = GUI.SelectionGrid(new Rect(0, 20, fineTuneWindowRect.width, 150), movementSelectionInt, movementNames, 3);
+
+		scrollPosition = GUI.BeginScrollView(new Rect(0, 180, fineTuneWindowRect.width, 150), scrollPosition, new Rect(0, 0, fineTuneWindowRect.width, movementNames.Length * 30));
+		//Show chosen movements settings
+		for(int f = 0; f < modelAnimator.animations[movementSelectionInt].frames.Length; ++f)
+		{
+			//frame label
+			GUI.Label(new Rect(10, 21 * f, fineTuneWindowRect.width * 0.3F, 20), "Frame " + f);
+
+			sliderValue = modelAnimator.animations[movementSelectionInt].frames[f].playbackSpeed;
+
+			//frame speed slider
+			modelAnimator.animations[movementSelectionInt].frames[f].playbackSpeed = GUI.HorizontalSlider(new Rect(20 + fineTuneWindowRect.width * 0.3F, 21 * f, fineTuneWindowRect.width * 0.5F, 20), sliderValue, 0, 100);
+
+		}
+
+		GUI.EndScrollView();
+
+		//Test button tests the current movement
+		if(GUI.Button(new Rect(0, 335, 120, 30), "Test Movement"))
+		{
+			modelAnimator.animateModel(movementSelectionInt);
+		}
+
+		//Save button saves all
+		if(GUI.Button(new Rect(0, 370, 120, 30), "Save"))
+		{
+			string serializedAnimations = modelAnimator.serializeAnimations();
+			modelAnimator.saveAnimations(serializedAnimations);
+		}
 	}
 
 	void SetupWindow(int windowID)

@@ -84,7 +84,8 @@ public class ModelAnimator : MonoBehaviour
 		//calls animateModel on animations one by one as they finish
 		for(int a = 0; a < animationIndices.Length; ++a)
 		{
-			StartCoroutine(animateModel(animationIndices[a], fin => animationPlaying = fin));
+			//StartCoroutine(animateModel(animationIndices[a], fin => animationPlaying = fin));
+			animateModel(animationIndices[a]);
 
 			while(animationPlaying)
 			{
@@ -98,14 +99,21 @@ public class ModelAnimator : MonoBehaviour
 		yield return true;
 	}
 
-	//runs as a coroutine and animates the model
-	IEnumerator animateModel(int index, Action<bool> playing)
+	public void animateModel(int index)
 	{
-		animateModel(animations[index], val => animationIsPlaying = val);
+		gatherTransforms();
 
-		yield return true;
+		StartCoroutine(animateModel(animations[index], val => animationIsPlaying = val));
 	}
 
+	public void animateModel(ModelAnimation animation)
+	{
+		gatherTransforms();
+
+		StartCoroutine(animateModel(animation, val => animationIsPlaying = val));
+	}
+
+	//runs as a coroutine and animates the model
 	public IEnumerator animateModel(ModelAnimation animation, Action<bool> playing)
 	{
 		playing(true);
