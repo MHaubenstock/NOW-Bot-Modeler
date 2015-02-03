@@ -5,7 +5,7 @@
 -nowarn:BCW0016
 -nowarn:BCW0003
 -method:Main
--out:Temp/Assembly-UnityScript-firstpass.dll
+-out:Temp/Assembly-UnityScript-Editor.dll
 -x-type-inference-rule-attribute:UnityEngineInternal.TypeInferenceRuleAttribute
 -debug
 -define:UNITY_4_5_1
@@ -45,8 +45,9 @@
 -define:UNITY_EDITOR_OSX
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll'
+-r:'Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll'
+-r:'Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll'
+-r:'Library/ScriptAssemblies/Assembly-CSharp.dll'
+-r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll'
 -i:UnityEditor
-'Assets/Standard Assets/Scripts/Camera Scripts/MouseOrbit.js'
-'Assets/Standard Assets/Scripts/Camera Scripts/SmoothFollow.js'
-'Assets/Standard Assets/Scripts/Camera Scripts/SmoothLookAt.js'
-'Assets/Standard Assets/Scripts/General Scripts/DragRigidbody.js'
+'Assets/Editor/PoseCreator.js'

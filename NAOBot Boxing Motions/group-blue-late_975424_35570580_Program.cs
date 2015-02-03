@@ -37,6 +37,7 @@ namespace Final_Lab_Get_Angles
             List<float> LAngle = new List<float> { -0.4662941f, 0.009245962f, -0.866668f, 0.6427041f, 0.371186f, -0.07205604f };
             List<float> LLeg = new List<float> { -0.02143404f, 0.02765396f, -1.53589f, -0.09232792f, 0.233126f, -0.01683204f };*/
 
+            //ARE THE ROTATIONS IN RADIANS?
             List<float> RLeg = new List<float> { -0.461692f, -0.5092461f, -0.208666f, 0.6903419f, -0.21932f, 0.3977605f };
             List<float> LLeg = new List<float> { -0.461692f, 0.174918f, -0.400332f, 0.57214f, 0.118076f, -0.147222f };
             List<float> RArm = new List<float> { 0.22554f, 0.151824f, 1.17807f, 1.544616f, 1.263974f, 0.322f };

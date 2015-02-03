@@ -437,12 +437,12 @@ public class MovementBuilder : MonoBehaviour
 			Vector3 targetPos = constrainRobotArmMovement(ray.GetPoint(distance), shoulder, hand);
 			hand.position = Vector3.Lerp(shoulder.position + (Vector3.down * maxElbowDistanceFromShoulder), shoulder.position + ((targetPos - shoulder.position) * maxElbowDistanceFromShoulder), Vector3.Distance(targetPos, shoulder.position) / maxHandDistanceFromShoulder);
 			hand.position += ((hand.position - shoulder.position).normalized * maxElbowDistanceFromShoulder) - (hand.position - shoulder.position);
-			
+
 			Vector3 resultDirection = hand.position - constrainRobotArmMovement(ray.GetPoint(distance), shoulder, hand);
 			hand.right = resultDirection;
-			
+
 			shoulder.right = -(hand.position - shoulder.position);
-			
+
 			yield return true;
 		}
 	}
