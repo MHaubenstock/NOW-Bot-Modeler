@@ -21,6 +21,11 @@ public class IntroToRoboticsAPI : MonoBehaviour
 	public Vector3 rightHip;
 	public Vector3 rightKnee;
 
+	public float armLength;
+	public float forearmLength;
+	public float thighLength;
+	public float legLength;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -33,6 +38,11 @@ public class IntroToRoboticsAPI : MonoBehaviour
 		rightElbow = RightElbow.localEulerAngles;
 		rightHip = RightHip.localEulerAngles;
 		rightKnee = RightKnee.localEulerAngles;
+
+		armLength = Vector3.Distance(LeftShoulder.position, LeftElbow.position);
+		forearmLength = LeftElbow.lossyScale.x;
+		thighLength = Vector3.Distance(LeftHip.position, LeftKnee.position);
+		legLength = LeftKnee.lossyScale.x;
 
 		initialization();
 	}
