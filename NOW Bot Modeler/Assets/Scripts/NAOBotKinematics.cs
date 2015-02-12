@@ -13,6 +13,6 @@ public class NAOBotKinematics : IntroToRoboticsAPI
 	//Use this to calculate IK
 	override public void calculateIK()
 	{
-		leftShoulder += new Vector3(1.0F, 0, 0);
+
 	}
 }
