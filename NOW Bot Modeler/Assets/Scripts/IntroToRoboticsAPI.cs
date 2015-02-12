@@ -12,23 +12,39 @@ public class IntroToRoboticsAPI : MonoBehaviour
 	public Transform RightHip;
 	public Transform RightKnee;
 
-	public float leftShoulder;
-	public float leftElbow;
-	public float leftHip;
-	public float leftKnee;
-	public float rightShoulder;
-	public float rightElbow;
-	public float rightHip;
-	public float rightKnee;
+	public float leftShoulderF;
+	public float leftShoulderL;
+	public float leftElbowF;
+	public float leftElbowL;
+	public float leftHipF;
+	public float leftHipL;
+	public float leftKneeF;
+	public float leftKneeL;
+	public float rightShoulderF;
+	public float rightShoulderL;
+	public float rightElbowF;
+	public float rightElbowL;
+	public float rightHipF;
+	public float rightHipL;
+	public float rightKneeF;
+	public float rightKneeL;
 
-	private float leftShoulderP;
-	private float leftElbowP;
-	private float leftHipP;
-	private float leftKneeP;
-	private float rightShoulderP;
-	private float rightElbowP;
-	private float rightHipP;
-	private float rightKneeP;
+	private float leftShoulderPF;
+	private float leftShoulderPL;
+	private float leftElbowPF;
+	private float leftElbowPL;
+	private float leftHipPF;
+	private float leftHipPL;
+	private float leftKneePF;
+	private float leftKneePL;
+	private float rightShoulderPF;
+	private float rightShoulderPL;
+	private float rightElbowPF;
+	private float rightElbowPL;
+	private float rightHipPF;
+	private float rightHipPL;
+	private float rightKneePF;
+	private float rightKneePL;
 
 	public float armLength;
 	public float forearmLength;
@@ -38,25 +54,47 @@ public class IntroToRoboticsAPI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		leftShoulder = LeftShoulder.localRotation.x;
-		leftElbow = LeftElbow.localRotation.x;
-		leftHip = LeftHip.localRotation.x;
-		leftKnee = LeftKnee.localRotation.x;
+		//Forward joint rotations
+		leftShoulderF = LeftShoulder.localRotation.x;
+		leftElbowF = LeftElbow.localRotation.x;
+		leftHipF = LeftHip.localRotation.x;
+		leftKneeF = LeftKnee.localRotation.x;
 
-		rightShoulder = RightShoulder.localRotation.x;
-		rightElbow = RightElbow.localRotation.x;
-		rightHip = RightHip.localRotation.x;
-		rightKnee = RightKnee.localRotation.x;
+		rightShoulderF = RightShoulder.localRotation.x;
+		rightElbowF = RightElbow.localRotation.x;
+		rightHipF = RightHip.localRotation.x;
+		rightKneeF = RightKnee.localRotation.x;
 
-		leftShoulderP = LeftShoulder.localRotation.x;
-		leftElbowP = LeftElbow.localRotation.x;
-		leftHipP = LeftHip.localRotation.x;
-		leftKneeP = LeftKnee.localRotation.x;
+		leftShoulderPF = LeftShoulder.localRotation.x;
+		leftElbowPF = LeftElbow.localRotation.x;
+		leftHipPF = LeftHip.localRotation.x;
+		leftKneePF = LeftKnee.localRotation.x;
 
-		rightShoulderP = RightShoulder.localRotation.x;
-		rightElbowP = RightElbow.localRotation.x;
-		rightHipP = RightHip.localRotation.x;
-		rightKneeP = RightKnee.localRotation.x;
+		rightShoulderPF = RightShoulder.localRotation.x;
+		rightElbowPF = RightElbow.localRotation.x;
+		rightHipPF = RightHip.localRotation.x;
+		rightKneePF = RightKnee.localRotation.x;
+
+		//Lateral joint rotations
+		leftShoulderL = LeftShoulder.localRotation.z;
+		leftElbowL = LeftElbow.localRotation.y;
+		leftHipL = LeftHip.localRotation.z;
+		leftKneeL = LeftKnee.localRotation.y;
+
+		rightShoulderL = RightShoulder.localRotation.z;
+		rightElbowL = RightElbow.localRotation.y;
+		rightHipL = RightHip.localRotation.z;
+		rightKneeL = RightKnee.localRotation.y;
+
+		leftShoulderPL = LeftShoulder.localRotation.z;
+		leftElbowPL = LeftElbow.localRotation.y;
+		leftHipPL = LeftHip.localRotation.z;
+		leftKneePL = LeftKnee.localRotation.y;
+
+		rightShoulderPL = RightShoulder.localRotation.z;
+		rightElbowPL = RightElbow.localRotation.y;
+		rightHipPL = RightHip.localRotation.z;
+		rightKneePL = RightKnee.localRotation.y;
 
 		armLength = Vector3.Distance(LeftShoulder.position, LeftElbow.position);
 		forearmLength = LeftElbow.lossyScale.x;
@@ -75,33 +113,73 @@ public class IntroToRoboticsAPI : MonoBehaviour
 	{
 		calculateIK();
 
-		leftShoulderP = leftShoulder - leftShoulderP;
-		leftElbowP = leftElbow - leftElbowP;
-		leftHipP = leftHip - leftHipP;
-		leftKneeP = leftKnee - leftKneeP;
-		rightShoulderP = rightShoulder - rightShoulderP;
-		rightElbowP = rightElbow - rightElbowP;
-		rightHipP = rightHip - rightHipP;
-		rightKneeP = rightKnee - rightKneeP;
+		/*
+		leftShoulderPF = leftShoulderF - leftShoulderPF;
+		leftElbowPF = leftElbowF - leftElbowPF;
+		leftHipPF = leftHipF - leftHipPF;
+		leftKneePF = leftKneeF - leftKneePF;
+		rightShoulderPF = rightShoulderF - rightShoulderPF;
+		rightElbowPF = rightElbowF - rightElbowPF;
+		rightHipPF = rightHipF - rightHipPF;
+		rightKneePF = rightKneeF - rightKneePF;
 
-		LeftShoulder.localRotation = LeftShoulder.localRotation * Quaternion.Euler(leftShoulderP, 0, 0);
-		LeftElbow.localRotation = LeftElbow.localRotation * Quaternion.Euler(leftElbowP, 0, 0);
-		LeftHip.localRotation = LeftHip.localRotation * Quaternion.Euler(leftHipP, 0, 0);
-		LeftKnee.localRotation = LeftKnee.localRotation * Quaternion.Euler(leftKneeP, 0, 0);
+		leftShoulderPL = leftShoulderL - leftShoulderPL;
+		leftElbowPL = leftElbowL - leftElbowPL;
+		leftHipPL = leftHipL - leftHipPL;
+		leftKneePL = leftKneeL - leftKneePL;
+		rightShoulderPL = rightShoulderL - rightShoulderPL;
+		rightElbowPL = rightElbowL - rightElbowPL;
+		rightHipPL = rightHipL - rightHipPL;
+		rightKneePL = rightKneeL - rightKneePL;
+		*/
+		leftShoulderPF = leftShoulderPF - leftShoulderF;
+		leftElbowPF = leftElbowPF - leftElbowF;
+		leftHipPF = leftHipPF - leftHipF;
+		leftKneePF = leftKneePF - leftKneeF;
+		rightShoulderPF = rightShoulderPF - rightShoulderF;
+		rightElbowPF = rightElbowPF - rightElbowF;
+		rightHipPF = rightHipPF - rightHipF;
+		rightKneePF = rightKneePF - rightKneeF;
 
-		RightShoulder.localRotation = RightShoulder.localRotation * Quaternion.Euler(rightShoulderP, 0, 0);
-		RightElbow.localRotation = RightElbow.localRotation * Quaternion.Euler(rightElbowP, 0, 0);
-		RightHip.localRotation = RightHip.localRotation * Quaternion.Euler(rightHipP, 0, 0);
-		RightKnee.localRotation = RightKnee.localRotation * Quaternion.Euler(rightKneeP, 0, 0);
+		leftShoulderPL = leftShoulderPL - leftShoulderL;
+		leftElbowPL = leftElbowPL - leftElbowL;
+		leftHipPL = leftHipPL - leftHipL;
+		leftKneePL = leftKneePL - leftKneeL;
+		rightShoulderPL = rightShoulderPL - rightShoulderL;
+		rightElbowPL = rightElbowPL - rightElbowL;
+		rightHipPL = rightHipPL - rightHipL;
+		rightKneePL = rightKneePL - rightKneeL;
 
-		leftShoulderP = leftShoulder;
-		leftElbowP = leftElbow;
-		leftHipP = leftHip;
-		leftKneeP = leftKnee;
-		rightShoulderP = rightShoulder;
-		rightElbowP = rightElbow;
-		rightHipP = rightHip;
-		rightKneeP = rightKnee;
+
+		LeftShoulder.localRotation = LeftShoulder.localRotation * Quaternion.Euler(leftShoulderPF, 0, leftShoulderPL);
+		LeftElbow.localRotation = LeftElbow.localRotation * Quaternion.Euler(leftElbowPF, leftElbowPL, 0);
+		LeftHip.localRotation = LeftHip.localRotation * Quaternion.Euler(leftHipPF, 0, leftHipPL);
+		LeftKnee.localRotation = LeftKnee.localRotation * Quaternion.Euler(leftKneePF, leftKneePL, 0);
+
+		RightShoulder.localRotation = RightShoulder.localRotation * Quaternion.Euler(rightShoulderPF, 0, rightShoulderPL);
+		RightElbow.localRotation = RightElbow.localRotation * Quaternion.Euler(rightElbowPF, rightElbowPL, 0);
+		RightHip.localRotation = RightHip.localRotation * Quaternion.Euler(rightHipPF, 0, rightHipPL);
+		RightKnee.localRotation = RightKnee.localRotation * Quaternion.Euler(rightKneePF, rightKneePL, 0);
+
+
+
+		leftShoulderPF = leftShoulderF;
+		leftElbowPF = leftElbowF;
+		leftHipPF = leftHipF;
+		leftKneePF = leftKneeF;
+		rightShoulderPF = rightShoulderF;
+		rightElbowPF = rightElbowF;
+		rightHipPF = rightHipF;
+		rightKneePF = rightKneeF;
+
+		leftShoulderPL = leftShoulderL;
+		leftElbowPL = leftElbowL;
+		leftHipPL = leftHipL;
+		leftKneePL = leftKneeL;
+		rightShoulderPL = rightShoulderL;
+		rightElbowPL = rightElbowL;
+		rightHipPL = rightHipL;
+		rightKneePL = rightKneeL;
 	}
 
 	virtual public void calculateIK()
@@ -111,15 +189,7 @@ public class IntroToRoboticsAPI : MonoBehaviour
 	//Sets the rotation ofthe NAO bot's joints, Pass in null if you don't want one to change
 	private void SetRotations(float lShoulder, float lElbow, float lHip, float lKnee, float rShoulder, float rElbow, float rHip, float rKnee)
 	{
-		leftShoulder = lShoulder % 360;
-		leftElbow = lElbow % 360;
-		leftHip = lHip % 360;
-		leftKnee = lKnee % 360;
 
-		rightShoulder = rShoulder % 360;
-		rightElbow = rElbow % 360;
-		rightHip = rHip % 360;
-		rightKnee = rKnee % 360;
 	}
 
 	//Returns dictionary of the robots joint rotations
